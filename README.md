@@ -2,8 +2,11 @@
 A simple project setup that uses react router
 
 Setup:
+
 1. Clone
+
 2. Run "npm install"
+
 3. Run "gulp serve"
 
 Todos:
