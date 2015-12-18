@@ -1,0 +1,17 @@
+{
+  "name": "react-router-example",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Johan Gustafsson <johan.gustafsson@solidio.se>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/SolidIO/react-simple-router-setup",
+  "moduleType": [
+    "node"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "components-font-awesome": "~4.5.0"
+  }
+}
