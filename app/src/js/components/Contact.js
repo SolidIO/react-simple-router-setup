@@ -17,7 +17,7 @@ var Contact = React.createClass({
 						<p>This is the contact page</p>
 						<p>Redirect inside components: <a onClick={this._redirectTo}>Back to home</a></p>
 					</div>
-				</div>	
+				</div>
 			</div>
 		);
 	}

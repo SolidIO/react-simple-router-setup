@@ -47,7 +47,7 @@ var Contact = React.createClass({displayName: "Contact",
 						React.createElement("p", null, "This is the contact page"), 
 						React.createElement("p", null, "Redirect inside components: ", React.createElement("a", {onClick: this._redirectTo}, "Back to home"))
 					)
-				)	
+				)
 			)
 		);
 	}
@@ -55,6 +55,7 @@ var Contact = React.createClass({displayName: "Contact",
 });
 
 module.exports = Contact;
+
 
 },{"react":207,"react-router":74}],3:[function(require,module,exports){
 var React = require('react');
@@ -69,7 +70,7 @@ var Home = React.createClass({displayName: "Home",
 						React.createElement("h1", null, "Welcome"), 
 						React.createElement("p", null, "This is the home page")
 					)
-				)	
+				)
 			)
 		);
 	}
@@ -78,54 +79,51 @@ var Home = React.createClass({displayName: "Home",
 
 module.exports = Home;
 
+
 },{"react":207}],4:[function(require,module,exports){
 var React 			= require('react');
 var ReactDOM 		= require('react-dom');
 var Router 			= require('react-router').Router;
 var Route 			= require('react-router').Route;
-var Link 			= require('react-router').Link;
-var IndexRoute 		= require('react-router').IndexRoute;
-var Home			= require('./components/Home');
-var About			= require('./components/About');
+var Link 			  = require('react-router').Link;
+var IndexRoute 	= require('react-router').IndexRoute;
+var Home			  = require('./components/Home');
+var About			  = require('./components/About');
 var Contact			= require('./components/Contact');
 
 var App = React.createClass({displayName: "App",
-  	render() {
-    	return (
-      		React.createElement("div", null, 
-        		/* change the <a>s to <Link>s */
-        		React.createElement("nav", {className: "navbar navbar-default"}, 
-        			React.createElement("div", {className: "container-fluid"}, 
-        				React.createElement("div", {className: "collapse navbar-collapse"}, 
-			        		React.createElement("ul", {className: "nav navbar-nav"}, 
-					          	React.createElement("li", null, React.createElement(Link, {to: "/home"}, "Home")), 
-					          	React.createElement("li", null, React.createElement(Link, {to: "/about"}, "About")), 
-					          	React.createElement("li", null, React.createElement(Link, {to: "/contact"}, "Contact"))
-					        )
-					    )
-        			)
-        		), 
+    render: function () {
+        return (
+            React.createElement("div", null, 
+                React.createElement("nav", {className: "navbar navbar-default"}, 
+                    React.createElement("div", {className: "container-fluid"}, 
+                        React.createElement("div", {className: "collapse navbar-collapse"}, 
+                            React.createElement("ul", {className: "nav navbar-nav"}, 
+                                React.createElement("li", null, React.createElement(Link, {to: "/home"}, "Home")), 
+                                React.createElement("li", null, React.createElement(Link, {to: "/about"}, "About")), 
+                                React.createElement("li", null, React.createElement(Link, {to: "/contact"}, "Contact"))
+                            )
+                        )
+                    )
+                ), 
+                this.props.children
+            )
+            );
+        }
+    });
 
-		        /*
-		          Router will figure out the children for us
-		        */
-		        this.props.children
-      		)
-    	)
-  	}
-})
+    // Render router with routes
+    ReactDOM.render((
+        React.createElement(Router, null, 
+            React.createElement(Route, {path: "/", component: App}, 
+                React.createElement(IndexRoute, {component: Home}), 
+                React.createElement(Route, {path: "home", component: Home}), 
+                React.createElement(Route, {path: "about", component: About}), 
+                React.createElement(Route, {path: "contact", component: Contact})
+            )
+        )
+    ), document.getElementById('app'));
 
-// Render router with routes
-ReactDOM.render((
-  	React.createElement(Router, null, 
-    	React.createElement(Route, {path: "/", component: App}, 
-    		React.createElement(IndexRoute, {component: Home}), 
-      		React.createElement(Route, {path: "home", component: Home}), 
-      		React.createElement(Route, {path: "about", component: About}), 
-      		React.createElement(Route, {path: "contact", component: Contact})
-    	)
-  	)
-), document.getElementById('app'))
 
 },{"./components/About":1,"./components/Contact":2,"./components/Home":3,"react":207,"react-dom":54,"react-router":74}],5:[function(require,module,exports){
 (function (process){

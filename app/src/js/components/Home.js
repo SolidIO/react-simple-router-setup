@@ -10,7 +10,7 @@ var Home = React.createClass({
 						<h1>Welcome</h1>
 						<p>This is the home page</p>
 					</div>
-				</div>	
+				</div>
 			</div>
 		);
 	}

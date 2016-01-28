@@ -13,8 +13,14 @@ var gulp = require('gulp'),
     react = require('reactify'),
     del = require('del'),
     minifyHTML = require('gulp-minify-html'),
+    htmlreplace = require('gulp-html-replace'),
+    randomstring = require("randomstring"),
     reload = browserSync.reload;
 
+
+// Generate random names
+var stylesName = randomstring.generate() + '.min.css';
+var jsName = randomstring.generate() + '.min.js';
 
 /**
  * Cleaning dist/ folder
@@ -34,7 +40,7 @@ gulp.task('browserify-js', function() {
 
 // Browserify css
 gulp.task('browserify-css', function() {
-    gulp.src('./app/src/css/style.css')
+    gulp.src('./app/src/css/*.css')
         .pipe(gulp.dest('./app/dist/css'));
 });
 
@@ -83,7 +89,7 @@ gulp.task('minify:js', function() {
     return brows('./app/src/js/main.js')
         .transform(react)
         .bundle()
-        .pipe(source('./main.js'))
+        .pipe(source('./' + jsName))
         .pipe(buffer())
         .pipe(uglify())
         .pipe(gulp.dest('./app/dist/js'));
@@ -92,9 +98,16 @@ gulp.task('minify:js', function() {
 // Minify css
 gulp.task('minify:css', function() {
     return gulp.src('./app/src/css/*.css')
-        .pipe(concat('./style.css'))
+        .pipe(concat('./' + stylesName))
         .pipe(cssmin())
         .pipe(gulp.dest('./app/dist/css'));
+});
+
+
+// Move assets
+gulp.task('move:assets', function() {
+    return gulp.src('./app/assets/**/*')
+        .pipe(gulp.dest('./app/dist/assets'));
 });
 
 // Minify html
@@ -106,6 +119,11 @@ gulp.task('minify:html', function() {
 
     return gulp.src('./app/index.html')
         .pipe(replace('"dist/', '"'))
+        .pipe(gulp.dest('./app/dist'))
+        .pipe(htmlreplace({
+            'css': 'css/' + stylesName,
+            'js': 'js/' + jsName
+        }))
         .pipe(minifyHTML(opts))
         .pipe(gulp.dest('./app/dist'));
 });
@@ -121,6 +139,6 @@ gulp.task('watch', function() {
 
 gulp.task('clean_dist', ['clean']);
 
-gulp.task('default', ['bower', 'minify:html', 'minify:js', 'minify:css']);
+gulp.task('default', ['bower', 'minify:js', 'minify:css', 'minify:html', 'move:assets']);
 
-gulp.task('serve', ['bower', 'browserify-js', 'browserify-css', 'server', 'watch']);
+gulp.task('serve', ['bower', 'browserify-js', 'browserify-css', 'watch', 'server']);
